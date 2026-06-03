@@ -73,10 +73,9 @@ jobs:
           path: .
 
       - name: Install MultiApps Plugin
-        run: |
-          wget https://github.com/cloudfoundry/multiapps-cli-plugin/releases/latest/download/linux64-binary
-          chmod +x linux64-binary
-          cf install-plugin ./linux64-binary -f
+          run: |
+            cf install-plugin multiapps -f
+            cf plugins
 
       - name: Deploy MTAR
         run: |
