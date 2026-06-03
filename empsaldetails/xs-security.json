@@ -1,0 +1,10 @@
+{
+  "xsappname": "empsaldetails",
+  "tenant-mode": "dedicated",
+  "oauth2-configuration": {
+    "redirect-uris": [
+      "https://port5000-workspaces-ws-qofof.ap21.trial.applicationstudio.cloud.sap/"
+    ]
+  }
+  
+}

@@ -1,0 +1,12 @@
+{
+  "name": "approuter",
+  "dependencies": {
+    "@sap/approuter": "^22.0.0",
+    "@sap/xsenv": "^5"
+  },
+  
+  "scripts": {
+    "start": "node -r @sap/xsenv node_modules/@sap/approuter/approuter.js"
+  }
+
+}
