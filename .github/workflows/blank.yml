@@ -25,5 +25,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Success Message
-        run: echo "Weather CAP Build Successful"
+      - name: Install CDS DK
+        run: npm install -g @sap/cds-dk
+
+      - name: Build CAP Project
+        run: cds build
