@@ -36,3 +36,9 @@ jobs:
 
       - name: Build MTAR
         run: mbt build
+
+      - name: Upload MTAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: mtar-file
+          path: empsaldetails/mta_archives/*.mtar
