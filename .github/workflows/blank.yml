@@ -73,9 +73,10 @@ jobs:
           path: .
 
       - name: Install MultiApps Plugin
-          run: |
-            cf install-plugin multiapps -f
-            cf plugins
+        run: |
+          cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
+          cf install-plugin multiapps -f
+          cf plugins
 
       - name: Deploy MTAR
         run: |
