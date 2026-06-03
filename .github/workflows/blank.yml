@@ -18,5 +18,8 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install Dependencies
+        run: npm install
+
       - name: Print Message
-        run: echo "Node.js installed successfully"
+        run: echo "Build Successful"
