@@ -30,3 +30,9 @@ jobs:
 
       - name: Build CAP Project
         run: cds build
+
+      - name: Install MBT
+        run: npm install -g mbt
+
+      - name: Build MTAR
+        run: mbt build
