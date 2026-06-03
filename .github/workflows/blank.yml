@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: weather-cap
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -21,5 +25,5 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Print Message
-        run: echo "Build Successful"
+      - name: Success Message
+        run: echo "Weather CAP Build Successful"
