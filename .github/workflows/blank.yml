@@ -11,7 +11,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: weather-cap
+        working-directory: empsaldetails
 
     steps:
       - name: Checkout Code
