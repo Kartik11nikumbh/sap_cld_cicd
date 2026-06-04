@@ -1,0 +1,83 @@
+name: SAP CAP CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: empsaldetails
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install CDS DK
+        run: npm install -g @sap/cds-dk
+
+      - name: Build CAP Project
+        run: cds build
+
+      - name: Install MBT
+        run: npm install -g mbt
+
+      - name: Build MTAR
+        run: mbt build
+
+      - name: Upload MTAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: mtar-file
+          path: empsaldetails/mta_archives/*.mtar
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install CF CLI
+        run: |
+          wget -O cf8.deb "https://packages.cloudfoundry.org/stable?release=debian64&version=v8"
+          sudo dpkg -i cf8.deb
+          cf --version
+
+      - name: Login to Cloud Foundry
+        run: |
+          cf api ${{ secrets.CF_API }}
+          cf auth ${{ secrets.CF_USERNAME }} ${{ secrets.CF_PASSWORD }}
+          cf target -o ${{ secrets.CF_ORG }} -s ${{ secrets.CF_SPACE }}
+
+      - name: Verify Login
+        run: cf target
+
+      - name: Download MTAR
+        uses: actions/download-artifact@v4
+        with:
+          name: mtar-file
+          path: .
+
+      - name: Install MultiApps Plugin
+        run: |
+          cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
+          cf install-plugin multiapps -f
+          cf plugins
+
+      - name: Deploy MTAR
+        run: |
+          cf deploy *.mtar -f
